@@ -1,14 +1,18 @@
 package com.example.batch.controller;
 
 import com.example.batch.entity.Student;
+import com.example.batch.service.IUploadService;
 import com.example.batch.util.ExcelUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +23,21 @@ import java.util.List;
  */
 @Controller
 public class TestController {
+
+    @Autowired
+    private IUploadService uploadService;
     /**
      * @Description 全局变量 每次使用前 先清空  否则会有缓存
      **/
     private List<Student> studentList = new ArrayList<>();
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void uploadFile(@RequestPart("file") MultipartFile file) throws Exception {
-        String filePath = "C:\\Temp\\" + file.getOriginalFilename();
-        //转存文件
-        try {
-            file.transferTo(new File(filePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         showData(filePath);
+        //上传文件到指定位置
+        String uploadFile = uploadService.uploadFile(file);
+        //读取文件
+        showData(uploadFile);
+        return;
     }
 
     protected List<Student> showData(String filePath) throws Exception {

@@ -4,7 +4,7 @@ function InitExcelFile() {
     $("#AttachGUID").val(newGuid());
 
     $("#excelFile").fileinput({
-        uploadUrl: "/FileUpload/Upload",//上传的地址
+        uploadUrl: "/upload",//上传的地址
         uploadAsync: true,              //异步上传
         language: "zh",                 //设置语言
         showCaption: true,              //是否显示标题
@@ -24,10 +24,11 @@ function InitExcelFile() {
             'jpg': '<i class="glyphicon glyphicon-picture"></i>',
             'pdf': '<i class="glyphicon glyphicon-file"></i>',
             'zip': '<i class="glyphicon glyphicon-file"></i>',
-        },
+        }
+        /*,
         uploadExtraData: {  //上传的时候，增加的附加参数
             folder: '数据导入文件', guid: $("#AttachGUID").val()
-        }
+        }*/
     })  //文件上传完成后的事件
         .on('fileuploaded', function (event, data, previewId, index) {
             var form = data.form, files = data.files, extra = data.extra,

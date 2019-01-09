@@ -228,18 +228,28 @@ public class ExcelUtil {
 			}
 		} else if (ext.equals("xlsx")) {
 			//读取2007、2010
-			XSSFWorkbook wb = new XSSFWorkbook(fs); // 获得工作
-			XSSFSheet sheet = wb.getSheetAt(0); // 拿到第一个sheet页
-			Iterator<Row> rows = sheet.rowIterator(); // 拿到第一行
-			while (rows.hasNext()) { // 如果有值
-				XSSFRow row = (XSSFRow) rows.next(); // 拿到当前行
-				if(row.getRowNum() != 0) {  //不读取标题(可以根据自己需求进行修改)
+			// 获得工作
+			XSSFWorkbook wb = new XSSFWorkbook(fs);
+			// 拿到第一个sheet页
+			XSSFSheet sheet = wb.getSheetAt(0);
+			// 拿到第一行
+			Iterator<Row> rows = sheet.rowIterator();
+			// 如果有值
+			while (rows.hasNext()) {
+				// 拿到当前行
+				XSSFRow row = (XSSFRow) rows.next();
+				//不读取标题(可以根据自己需求进行修改)
+				if(row.getRowNum() != 0) {
 					String[] data = new String[row.getLastCellNum()];
-					Iterator<Cell> cells = row.cellIterator(); // 拿到当前行所有列的集合
+					// 拿到当前行所有列的集合
+					Iterator<Cell> cells = row.cellIterator();
 					while (cells.hasNext()) {
-						XSSFCell cell = (XSSFCell) cells.next(); // 拿到列值
-						String cellValue = ""; // 存放单元格的值
-						switch (cell.getCellType()) { // 判断单元格的类型，取出单元格的值
+						// 拿到列值
+						XSSFCell cell = (XSSFCell) cells.next();
+						// 存放单元格的值
+						String cellValue = "";
+						// 判断单元格的类型，取出单元格的值
+						switch (cell.getCellType()) {
 						case XSSFCell.CELL_TYPE_NUMERIC:
 							// 处理数字类型 去掉科学计数法格式
 							double strCell = cell.getNumericCellValue();
@@ -287,14 +297,18 @@ public class ExcelUtil {
 		FileInputStream fs = new FileInputStream(file);
 		List<String> dataList = new ArrayList<String>();
 		if (ext.equals("xls")) {
-			HSSFWorkbook wb = new HSSFWorkbook(fs); // 获得工作
-			HSSFSheet sheet = wb.getSheetAt(0); // 拿到第一个sheet页
+			// 获得工作
+			HSSFWorkbook wb = new HSSFWorkbook(fs);
+			// 拿到第一个sheet页
+			HSSFSheet sheet = wb.getSheetAt(0);
 			String data = sheet.getSheetName();
 			dataList.add(data);
 		}else if (ext.equals("xlsx")) {
 			//读取2007、2010
-			XSSFWorkbook wb = new XSSFWorkbook(fs); // 获得工作
-			XSSFSheet sheet = wb.getSheetAt(0); // 拿到第一个sheet页
+			// 获得工作
+			XSSFWorkbook wb = new XSSFWorkbook(fs);
+			// 拿到第一个sheet页
+			XSSFSheet sheet = wb.getSheetAt(0);
 			String data = sheet.getSheetName();
 			dataList.add(data);
 		}
